@@ -136,10 +136,8 @@ class Api_model extends CI_Model
             a.LnameE,
             a.emcode,
             a.PositionName,
-            a.DeptCode,
-            b.Dept
+            a.DeptCode
             FROM employee a
-            INNER JOIN member b ON a.emcode = b.ecode
             WHERE $condition
             ORDER BY a.emcode ASC
             LIMIT 50
