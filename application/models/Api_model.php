@@ -301,12 +301,17 @@ class Api_model extends CI_Model
                     return conDateTimeFromDb($d);
                 }
             ),
-             array('db' => 'm_acci_location', 'dt' => 2),
-             array('db' => 'm_type3', 'dt' => 3),
-             array('db' => 'm_acci_name', 'dt' => 4),
-             array('db' => 'm_type1', 'dt' => 5),
-             array('db' => 'm_user_inform', 'dt' => 6),
-             array('db' => 'm_status', 'dt' => 7 , 
+            array('db' => 'm_datetime_inform', 'dt' => 2 ,
+                'formatter' => function($d , $row){
+                    return conDateTimeFromDb($d);
+                }
+            ),
+             array('db' => 'm_acci_location', 'dt' => 3),
+             array('db' => 'm_type3', 'dt' => 4),
+             array('db' => 'm_acci_name', 'dt' => 5),
+             array('db' => 'm_type1', 'dt' => 6),
+             array('db' => 'm_user_inform', 'dt' => 7),
+             array('db' => 'm_status', 'dt' => 8 , 
                 'formatter' => function($d , $row){
                     $color = '';
                     if($d == "Open"){
