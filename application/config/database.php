@@ -1,13 +1,18 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
+if($_SERVER['HTTP_HOST'] == "localhost"){
+	$mysqlServer = "192.168.20.22";
+}else{
+	$mysqlServer = "localhost";
+}
 
 $active_group = 'default';
 $query_builder = TRUE;
 
 $db['default'] = array(
 	'dsn'	=> '',
-	'hostname' => 'localhost',
+	'hostname' => $mysqlServer,
 	'username' => 'ant',
 	'password' => 'Ant1234',
 	'database' => 'rao',
@@ -30,7 +35,7 @@ $db['default'] = array(
 
 $db['saleecolour'] = array(
 	'dsn'	=> '',
-	'hostname' => 'localhost',
+	'hostname' => $mysqlServer,
 	'username' => 'ant',
 	'password' => 'Ant1234',
 	'database' => 'saleecolour',
