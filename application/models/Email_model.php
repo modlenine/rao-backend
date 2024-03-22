@@ -171,12 +171,15 @@ public function sendEmail_toMgr($formno)
       ';
       $to = "";
       $cc = "";
+      $ecodeAr = array();
+      $ecodeccAr = array();
 
       //  Email Zone
       $optionTo = getManagerEmail($viewfulldata->m_deptcode_inform);
       $to = array();
       foreach ($optionTo->result_array() as $result) {
          $to[] = $result['memberemail'];
+         $ecodeAr[] = $result['ecode'];
       }
 
 
@@ -184,9 +187,29 @@ public function sendEmail_toMgr($formno)
       $cc = array();
       foreach ($optioncc->result_array() as $resultcc) {
          $cc[] = $resultcc['memberemail'];
+         $ecodeccAr[] = $resultcc['ecode'];
       }
 
+
+      $to = array_unique($to);
+      $cc = array_unique($cc);
+      $ecodeAr = array_unique($ecodeAr);
+      $ecodeccAr = array_unique($ecodeccAr);
+
       send_email($subject , $body ,$to , $cc , $formno);
+      //  Email Zone
+
+      // Notification center program
+      $ecodeActionArr = $ecodeAr;
+      $ecodeReadArr = $ecodeccAr;
+
+      $title = $subject;
+      $status = $viewfulldata->m_status;
+      $link = getFrontendUrl()."viewdata/".$formno;
+      $programname = "RAO";
+
+      $this->notifycenter->insertdataaction_template($ecodeActionArr , $title , $status , $link , $formno , $programname);
+      $this->notifycenter->insertdataRead_template($ecodeReadArr , $title , $status , $link , $formno , $programname);
 
    }
 }
@@ -270,12 +293,15 @@ public function sendEmail_toOhs($formno)
       ';
       $to = "";
       $cc = "";
+      $ecodeAr = array();
+      $ecodeccAr = array();
 
       //  Email Zone
       $optionTo = getOhsEmail();
       $to = array();
       foreach ($optionTo->result_array() as $result) {
          $to[] = $result['memberemail'];
+         $ecodeAr[] = $result['ecode'];
       }
 
 
@@ -283,9 +309,28 @@ public function sendEmail_toOhs($formno)
       $cc = array();
       foreach ($optioncc->result_array() as $resultcc) {
          $cc[] = $resultcc['memberemail'];
+         $ecodeccAr[] = $resultcc['ecode'];
       }
 
+      $to = array_unique($to);
+      $cc = array_unique($cc);
+      $ecodeAr = array_unique($ecodeAr);
+      $ecodeccAr = array_unique($ecodeccAr);
+
       send_email($subject , $body ,$to , $cc , $formno);
+      //  Email Zone
+
+      // Notification center program
+      $ecodeActionArr = $ecodeAr;
+      $ecodeReadArr = $ecodeccAr;
+
+      $title = $subject;
+      $status = $viewfulldata->m_status;
+      $link = getFrontendUrl()."viewdata/".$formno;
+      $programname = "RAO";
+
+      $this->notifycenter->insertdataaction_template($ecodeActionArr , $title , $status , $link , $formno , $programname);
+      $this->notifycenter->insertdataRead_template($ecodeReadArr , $title , $status , $link , $formno , $programname);
 
    }
 }
@@ -391,12 +436,14 @@ public function saveEmail_toOhs($formno)
       ';
       $to = "";
       $cc = "";
+      $ecodeccAr = array();
 
       //  Email Zone
       $optionTo = getOwnerEmail($viewfulldata->m_ecode_inform);
       $to = array();
       foreach ($optionTo->result_array() as $result) {
          $to[] = $result['memberemail'];
+         $ecodeccAr[] = $result['ecode'];
       }
 
 
@@ -406,7 +453,21 @@ public function saveEmail_toOhs($formno)
       //    $cc[] = $resultcc['memberemail'];
       // }
 
+      $to = array_unique($to);
+      $ecodeccAr = array_unique($ecodeccAr);
+
       send_email($subject , $body ,$to , $cc , $formno);
+      //  Email Zone
+
+      // Notification center program
+      $ecodeReadArr = $ecodeccAr;
+
+      $title = $subject;
+      $status = $viewfulldata->m_status;
+      $link = getFrontendUrl()."viewdata/".$formno;
+      $programname = "RAO";
+
+      $this->notifycenter->insertdataRead_template($ecodeReadArr , $title , $status , $link , $formno , $programname);
 
    }
 }

@@ -101,6 +101,11 @@ function getRuningCode($groupcode)
 
 function getDb()
 {
+    if($_SERVER['HTTP_HOST'] == "localhost"){
+        $chooseDb = "WHERE db_autoid = 4";
+    }else{
+        $chooseDb = "WHERE db_autoid = 3";
+    }
     $sql = getfn()->db->query("SELECT
     db.db_autoid,
     db.db_username,
@@ -109,7 +114,7 @@ function getDb()
     db.db_host,
     db.db_active
     FROM
-    db");
+    db $chooseDb");
 
     return $sql->row();
 }
@@ -198,6 +203,15 @@ function getFile($formno)
     {
         $sql = getfn()->db->query("SELECT * FROM acci_files WHERE file_m_formno = '$formno'");
         return $sql->result();
+    }
+}
+
+function getFrontendUrl()
+{
+    if($_SERVER['HTTP_HOST'] == "localhost"){
+        return "http://$_SERVER[HTTP_HOST]/intsys/rao/";
+    }else{
+        return "https://$_SERVER[HTTP_HOST]/intsys/rao/";
     }
 }
 

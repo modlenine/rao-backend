@@ -104,9 +104,11 @@ function send_email($subject , $body ,$to = "" , $cc = "" , $formno)
     </style>
     '.$body;
     // $mail->send();
+
     if($_SERVER['HTTP_HOST'] != "localhost"){
         $mail->send();
     }
+
 }
 
 
@@ -119,7 +121,7 @@ function getManagerEmail($deptcode)
     }else{
         $ccSpeacial = '';
     }
-    $sql = emailobj()->db2->query("SELECT memberemail From member Where DeptCode = '$deptcode' and posi IN (65 , 75) and resigned = 0 and areaid is null $ccSpeacial");
+    $sql = emailobj()->db2->query("SELECT memberemail , ecode From member Where DeptCode = '$deptcode' and posi IN (65 , 75) and resigned = 0 and areaid is null $ccSpeacial");
     return $sql;
 }
 
@@ -127,14 +129,14 @@ function getManagerEmail($deptcode)
 function getOwnerEmail($ecode)
 {
     emailobj()->db2 = emailobj()->load->database('saleecolour', TRUE);
-    $sql = emailobj()->db2->query("SELECT memberemail From member Where ecode = '$ecode' and resigned = 0 ");
+    $sql = emailobj()->db2->query("SELECT memberemail , ecode From member Where ecode = '$ecode' and resigned = 0 ");
     return $sql;
 }
 
 function getOhsEmail()
 {
     emailobj()->db2 = emailobj()->load->database('saleecolour', TRUE);
-    $sql = emailobj()->db2->query("SELECT memberemail From member Where ecode = 'M0004' and resigned = 0 ");
+    $sql = emailobj()->db2->query("SELECT memberemail , ecode From member Where ecode = 'M0004' and resigned = 0 ");
     return $sql;
 }
 

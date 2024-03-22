@@ -26,7 +26,12 @@ class Api_model extends CI_Model
 
     public function escape_string()
     {
-        return mysqli_connect("localhost", "ant", "Ant1234", "saleecolour");
+        // return mysqli_connect("localhost", "ant", "Ant1234", "saleecolour");
+        if($_SERVER['HTTP_HOST'] == "localhost"){
+            return mysqli_connect("192.168.20.22", "ant", "Ant1234", "saleecolour");
+        }else{
+            return mysqli_connect("localhost", "ant", "Ant1234", "saleecolour");
+        }
     }
 
     public function checklogin()
@@ -625,6 +630,18 @@ class Api_model extends CI_Model
             }else if($this->input->post("ip-acci-mgrappro") == "ไม่อนุมัติ"){
                 $mgrApprove = "Manager Not Approve";
             }
+
+            //update old status
+            //Send to notifycenter
+            $notifyformno = $formno;
+            $notifyprogramname = "RAO";
+            $notifystatus = "action done";
+            $notifytype = "take action";
+
+            $this->notifycenter->updatedataAction_template($notifyformno , $notifyprogramname , $notifystatus , $notifytype);
+            //Send to notifycenter
+            //update old status
+
             $arMgrUpdate = array(
                 "m_mgr_approve" => $this->input->post("ip-acci-mgrappro"),
                 "m_mgr_memo" => $this->input->post("ip-acci-mgrappro-memo"),
@@ -740,6 +757,18 @@ class Api_model extends CI_Model
             }else if($this->input->post("ip-acci-ohsappro") == "แจ้งแก้ไข"){
                 $ohsApprove = "OHS Reject";
             }
+
+            //update old status
+            //Send to notifycenter
+            $notifyformno = $formno;
+            $notifyprogramname = "RAO";
+            $notifystatus = "action done";
+            $notifytype = "take action";
+
+            $this->notifycenter->updatedataAction_template($notifyformno , $notifyprogramname , $notifystatus , $notifytype);
+            //Send to notifycenter
+            //update old status
+
             $arOhsUpdate = array(
                 "m_ohs_approve" => $this->input->post("ip-acci-ohsappro"),
                 "m_ohs_memo" => $this->input->post("ip-acci-ohsappro-memo"),
